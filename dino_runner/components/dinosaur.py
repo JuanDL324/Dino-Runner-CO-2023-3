@@ -23,7 +23,7 @@ class Dinosaur:
 
     def update(self, user_input):
         if self.dino_jump:
-            self.jump()
+            self.jump(user_input)
         if self.dino_duck:
             self.duck()
         if self.dino_run:
@@ -34,7 +34,7 @@ class Dinosaur:
             self.dino_run = False
             self.dino_duck = True
             self.dino_jump = False
-        elif user_input[pygame.K_UP] and not self.dino_jump:
+        elif user_input[pygame.K_UP]:
             self.dino_run = False
             self.dino_duck = False
             self.dino_jump = True
@@ -67,12 +67,17 @@ class Dinosaur:
         self.steps_index += 1
 
 
-    def jump(self):
+    def jump(self, user_input):
         self.image = JUMPING
+        if user_input[pygame.K_w] and self.dino_jump:
+            self.dino_rect.y -= self.jump_vel * 2
+            self.jump_vel += 0.36
         if self.dino_jump:
-            self.dino_rect.y -= self.jump_vel * 4
-            self.jump_vel -= 0.8
+            self.dino_rect.y -= self.jump_vel * 4 #Entre más alto el número más alto saltará #Independiente de la distancia, sin importar que tan alto vaya regresara a la misma distancia que si su número fuera menor #Altura
+            self.jump_vel -= 0.8 #Distancia, entre menor sea el número, más alto va a saltar, si aumenta la distancia se acorta y salta menos
         if self.jump_vel < -self.JUMP_VEL:
             self.dino_rect.y = self.Y_POS
             self.dino_jump = False
             self.jump_vel = self.JUMP_VEL
+        #al no saltar mucho(en la resta de el eje y y la velocidad por 4) y restarle más(en veljump), pues menos distancia y menos salto subre
+        # si la resta es muy pequeña, demorará mucho para hasta llegar al suelo
