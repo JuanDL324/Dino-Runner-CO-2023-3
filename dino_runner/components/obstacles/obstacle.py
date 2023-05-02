@@ -1,5 +1,5 @@
 import pygame
-from dino_runner.utils.constants import SCREEN_WIDTH, BIRD
+from dino_runner.utils.constants import SCREEN_WIDTH, BIRD, LARGE_CACTUS, SMALL_CACTUS
 
 
 class Obstacle:
@@ -7,14 +7,10 @@ class Obstacle:
         self.image = image
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH
+        self.steps_index = 0
 
     def update(self, game_speed, player):
         self.rect.x -= game_speed
-
-
-        #self.image = BIRD[0] if self.steps_index < 5 else BIRD[1]
-
-        #self.steps_index += 1
 
 
         if self.rect.colliderect(player.dino_rect):

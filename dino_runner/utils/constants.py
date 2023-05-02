@@ -72,3 +72,5 @@ HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 DEFAULT_TYPE = "default"
 
 DINO_DEAD = pygame.image.load(os.path.join(IMG_DIR, 'Dino/DinoDead.png'))
+
+CLOCK = pygame.image.load(os.path.join(IMG_DIR, 'Other/clock.png'))

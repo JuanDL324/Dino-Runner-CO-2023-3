@@ -29,8 +29,6 @@ class Dinosaur:
             self.duck()
         if self.dino_run:
             self.run()
-        if self.dino_dead:
-            self.dead()
 
 
         if user_input[pygame.K_DOWN] and not self.dino_jump:

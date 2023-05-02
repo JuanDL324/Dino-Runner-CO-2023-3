@@ -13,6 +13,16 @@ class Birds(Obstacle):
 
 
     def __init__(self):
-        self.image = BIRD
+        self.image = BIRD[0]
         super().__init__(self.image)
         self.rect.y = random.choice(self.LIST_BIRD_POS_Y)
+
+    def update(self, game_speed, player):
+        if self.image == BIRD[0] or self.image == BIRD[1]:
+
+            self.image = BIRD[0] if self.steps_index < 5 else BIRD[1]
+
+            self.steps_index += 1
+            if self.steps_index >= 10:
+                self.steps_index = 0
+        super().update(game_speed, player)
