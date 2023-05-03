@@ -1,6 +1,8 @@
-import pygame
-from dino_runner.utils.constants import (JUMPING, JUMPING_SHIELD, RUNNING, RUNNING_SHIELD, DUCKING, DUCKING_SHIELD, DINO_DEAD,
-                                         DEFAULT_TYPE, SHIELD_TYPE)
+import pygame, random
+from dino_runner.utils.constants import (JUMPING, JUMPING_SHIELD, JUMPING_HAMMER, 
+                                         RUNNING, RUNNING_SHIELD, RUNNING_HAMMER,
+                                         DUCKING, DUCKING_SHIELD, DUCKING_HAMMER, DINO_DEAD,
+                                         DEFAULT_TYPE, SHIELD_TYPE, HAMMER_TYPE, CLOCK_TYPE)
 
 
 class Dinosaur:
@@ -11,11 +13,11 @@ class Dinosaur:
 
 
     def __init__(self):
-        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
-        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
-        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
+        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER}
+        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER}
+        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER}
         self.type = DEFAULT_TYPE
-        self.image = self.run_img[self.type][0] ###
+        self.image = self.run_img[self.type][0] 
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
@@ -25,6 +27,7 @@ class Dinosaur:
         self.dino_jump = False
         self.jump_vel = self.JUMP_VEL
         self.dino_dead = False
+        self.flag_clock = False
 
 
     def update(self, user_input):
@@ -102,3 +105,10 @@ class Dinosaur:
     def set_power_up(self, power_up):
         if power_up.type == SHIELD_TYPE:
             self.type = SHIELD_TYPE
+        if power_up.type == HAMMER_TYPE:
+            self.type = HAMMER_TYPE
+        #if power_up.type == CLOCK_TYPE:
+            #self.flag_clock = True ######### un número quiza?
+        
+            
+        

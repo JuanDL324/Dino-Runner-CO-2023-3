@@ -3,7 +3,6 @@ import pygame, random
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, CLOUD
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
-from dino_runner.components.power_ups.clock import Clock
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 
 
@@ -30,9 +29,9 @@ class Game:
         self.y_pos_bg = 380
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
-        self.power_clock = Clock() #cambiale
         self.power_up_manager = PowerUpManager()
         self.points = 0
+        
 
 
 
@@ -55,8 +54,13 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.obstacle_manager.update(self.game_speed, self.player)
-        self.power_clock.update(self.game_speed, self.player) #cambiale
         self.power_up_manager.update(self.game_speed, self.points, self.player)
+        if self.player.flag_clock:
+            list_speed_fast_or_slow = [10, 40]
+            self.game_speed = random.choice(list_speed_fast_or_slow)
+
+
+        #print(self.player.flag_clock)
         if self.player.dino_dead:
             self.playing = False
 
@@ -67,7 +71,6 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
-        self.power_clock.draw(self.screen) #cambiale
         self.power_up_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
@@ -119,3 +122,17 @@ class Game:
             self.screen.blit(BG, (image_width_bg + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         self.x_pos_bg -= self.game_speed
+
+    #def set_power_up(self, power_up):
+        #print("Llege a game")
+        #if power_up.type == CLOCK_TYPE:
+            #list_speed_fast_or_slow = [10, 40]
+            #self.game_speed = list_speed_fast_or_slow
+
+    #def set_power_up(power_up):
+        #list_speed_fast_or_slow = [10, 40]
+        #self.game_speed = random.choice(list_speed_fast_or_slow)
+
+
+        
+
