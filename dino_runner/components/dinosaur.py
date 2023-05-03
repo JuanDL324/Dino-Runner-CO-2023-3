@@ -1,5 +1,6 @@
 import pygame
-from dino_runner.utils.constants import JUMPING, RUNNING, DUCKING, DINO_DEAD
+from dino_runner.utils.constants import (JUMPING, JUMPING_SHIELD, RUNNING, RUNNING_SHIELD, DUCKING, DUCKING_SHIELD, DINO_DEAD,
+                                         DEFAULT_TYPE, SHIELD_TYPE)
 
 
 class Dinosaur:
@@ -10,7 +11,11 @@ class Dinosaur:
 
 
     def __init__(self):
-        self.image = RUNNING[0]
+        self.run_img = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
+        self.duck_img = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
+        self.jump_img = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
+        self.type = DEFAULT_TYPE
+        self.image = self.run_img[self.type][0] ###
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
@@ -63,7 +68,7 @@ class Dinosaur:
 
 
     def run(self):
-        self.image = RUNNING[0] if self.steps_index < 5 else RUNNING[1]
+        self.image = self.run_img[self.type][0] if self.steps_index < 5 else self.run_img[self.type][1]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS
@@ -71,7 +76,7 @@ class Dinosaur:
 
 
     def duck(self):
-        self.image = DUCKING[0] if self.steps_index < 5 else DUCKING[1]
+        self.image = self.duck_img[self.type][0] if self.steps_index < 5 else self.duck_img[self.type][1]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = self.X_POS
         self.dino_rect.y = self.Y_POS_DUCK
@@ -79,7 +84,7 @@ class Dinosaur:
 
 
     def jump(self, user_input):
-        self.image = JUMPING
+        self.image = self.jump_img[self.type]
         if user_input[pygame.K_w] and self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 2
             self.jump_vel += 0.36
@@ -92,3 +97,8 @@ class Dinosaur:
             self.jump_vel = self.JUMP_VEL
         #al no saltar mucho(en la resta de el eje y y la velocidad por 4) y restarle más(en veljump), pues menos distancia y menos salto subre
         # si la resta es muy pequeña, demorará mucho para hasta llegar al suelo
+
+
+    def set_power_up(self, power_up):
+        if power_up.type == SHIELD_TYPE:
+            self.type = SHIELD_TYPE
