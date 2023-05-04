@@ -7,8 +7,9 @@ from dino_runner.components.power_ups.clock import Clock
 class PowerUpManager():
     def __init__(self):
         self.power_ups = []
+        self.power_ups_collected = 0
         self.shield_or_hammer_or_clock = None
-        self.list_shield_or_hammer_or_clock = ["shield", "clock", "hammer"]
+        self.list_shield_or_hammer_or_clock = ["clock", "hammer", "shield"]
 
     def update(self, game_speed, points, player):
         self.shield_or_hammer_or_clock = random.choice(self.list_shield_or_hammer_or_clock)
@@ -20,6 +21,7 @@ class PowerUpManager():
             self.power_ups.append(Clock())
         for power_up in self.power_ups:
             if power_up.used or power_up.rect.x < -power_up.rect.width:
+                self.power_ups_collected += 1
                 self.power_ups.remove(power_up)
             if power_up.used:
                 player.set_power_up(power_up)

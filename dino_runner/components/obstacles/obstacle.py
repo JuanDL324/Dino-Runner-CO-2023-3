@@ -8,12 +8,16 @@ class Obstacle:
         self.rect = self.image.get_rect()
         self.rect.x = SCREEN_WIDTH
         self.steps_index = 0
+        self.destroy = False
 
     def update(self, game_speed, player):
         self.rect.x -= game_speed
 
+        if self.rect.colliderect(player.dino_rect) and player.hammer:
+            self.destroy = True
+
         if self.rect.colliderect(player.dino_rect):
-            if not player.shield:
+            if not player.shield and not player.hammer:
                 pygame.time.delay(300)
                 player.dead()
 
