@@ -13,8 +13,9 @@ class Obstacle:
         self.rect.x -= game_speed
 
         if self.rect.colliderect(player.dino_rect):
-            pygame.time.delay(300)
-            player.dead()
+            if not player.shield:
+                pygame.time.delay(300)
+                player.dead()
 
 
 

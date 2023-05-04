@@ -19,9 +19,9 @@ class PowerUp:
     def update(self, game_speed, player):
         self.rect.x -= game_speed
         if self.rect.colliderect(player.dino_rect):
-            self.star_time = pygame.time.get_ticks()
-            self.time_up = self.star_time + self.POWER_UP_DURATION
-            self.used = True
+                self.star_time = pygame.time.get_ticks()
+                self.time_up = self.star_time + self.POWER_UP_DURATION
+                self.used = True
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
